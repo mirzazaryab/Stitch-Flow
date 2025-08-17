@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Payment - Order #{{ order.order_number }}{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="main-content">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-credit-card"></i> Add Payment
+                        </h3>
+                        <small class="text-muted">Order #{{ order.order_number }} - {{ order.customer.name }}</small>
+                    </div>
+                    <div class="card-body">
+                        <!-- Order Summary -->
+                        <div class="alert alert-info">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <strong>Total</strong><br>
+                                    Rs: {{ order.total_amount }}
+                                </div>
+                                <div class="col-4">
+                                    <strong>Paid</strong><br>
+                                    <span class="text-success">Rs: {{ order.advance_payment }}</span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Remaining</strong><br>
+                                    <span class="text-danger">Rs: {{ order.remaining_payment }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">
+                                    <i class="bi bi-currency"></i> Payment Amount *
+                                </label>
+                                <input type="number" class="form-control" name="amount" step="0.01" 
+                                       placeholder="Enter payment amount" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="payment_method" class="form-label">
+                                    <i class="bi bi-credit-card"></i> Payment Method *
+                                </label>
+                                <select name="payment_method" class="form-control" required>
+                                    {% for value, label in payment_methods %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="payment_type" class="form-label">
+                                    <i class="bi bi-tag"></i> Payment Type *
+                                </label>
+                                <select name="payment_type" class="form-control" required>
+                                    {% for value, label in payment_types %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">
+                                    <i class="bi bi-chat-text"></i> Notes (Optional)
+                                </label>
+                                <textarea name="notes" class="form-control" rows="3" 
+                                          placeholder="Payment notes or reference"></textarea>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{% url 'order_detail' order.pk %}" class="btn btn-secondary me-md-2">
+                                    <i class="bi bi-arrow-left"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-check"></i> Record Payment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

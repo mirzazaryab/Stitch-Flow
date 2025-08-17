@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Status - Order #{{ order.order_number }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    .form-control, .form-control:focus {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px 12px 10px 16px; /* Added left padding */
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        box-shadow: none;
+    }
+    .form-control:focus {
+        border-color: #6b7280;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(107, 114, 128, 0.2);
+    }
+    .form-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2d3748;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+        background: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        color: #2d3748;
+    }
+    .card-title, h3, h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+    .btn-primary, .btn-secondary {
+        font-family: 'Poppins', sans-serif;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    .btn-primary {
+        background-color: #2b6cb0;
+        border-color: #2b6cb0;
+    }
+    .btn-primary:hover {
+        background-color: #2c5282;
+        border-color: #2c5282;
+    }
+    .btn-secondary {
+        background-color: #6b7280;
+        border-color: #6b7280;
+    }
+    .btn-secondary:hover {
+        background-color: #e2e8f0;
+        border-color: #2d3748;
+        color: #2d3748;
+    }
+    .text-muted, small {
+        font-family: 'Poppins', sans-serif;
+        color: #718096;
+    }
+    .text-danger {
+        font-family: 'Poppins', sans-serif;
+        color: #b91c1c;
+    }
+    .alert-info {
+        background-color: #e7f3ff;
+        border-color: #a3bffa;
+        color: #2b6cb0;
+        font-family: 'Poppins', sans-serif;
+    }
+    .status-badge {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .status-pending {
+        background-color: #e2e8f0;
+        color: #2d3748;
+    }
+    .status-cutting {
+        background-color: #bee3f8;
+        color: #2b6cb0;
+    }
+    .status-stitching {
+        background-color: #fefcbf;
+        color: #744210;
+    }
+    .status-quality {
+        background-color: #fed7e2;
+        color: #9b2c2c;
+    }
+    .status-kaj_overlock {
+        background-color: #c6f6d5;
+        color: #276749;
+    }
+    .status-pressing {
+        background-color: #e9d8fd;
+        color: #44337a;
+    }
+    .status-packing {
+        background-color: #b2f5ea;
+        color: #285e61;
+    }
+    .status-ready {
+        background-color: #c4f1f9;
+        color: #065f46;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="main-content py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-arrow-repeat me-2"></i> Update Order Status
+                        </h3>
+                        <small class="text-muted">Order #{{ order.order_number }} - {{ order.customer.name }}</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Current Status -->
+                        <div class="alert alert-info">
+                            <strong>Current Status:</strong>
+                            <span class="badge status-badge status-{{ order.status }} ms-2">
+                                {{ order.get_status_display }}
+                            </span>
+                        </div>
+
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="{{ form.status.id_for_label }}" class="form-label">
+                                    <i class="bi bi-arrow-repeat me-2"></i> New Status *
+                                </label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.status.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Status Guide -->
+                            <div class="mb-4">
+                                <h6>Production Phases:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><span class="badge status-badge status-pending">Pending</span> - Order received</li>
+                                            <li><span class="badge status-badge status-cutting">Cutting</span> - Fabric cutting</li>
+                                            <li><span class="badge status-badge status-stitching">Stitching</span> - Sewing process</li>
+                                            <li><span class="badge status-badge status-quality">Quality</span> - Quality check</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><span class="badge status-badge status-kaj_overlock">Kaj Overlock</span> - Finishing work</li>
+                                            <li><span class="badge status-badge status-pressing">Pressing</span> - Ironing</li>
+                                            <li><span class="badge status-badge status-packing">Packing</span> - Final packing</li>
+                                            <li><span class="badge status-badge status-ready">Ready</span> - Ready for pickup</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{% url 'order_detail' order.pk %}" class="btn btn-secondary me-md-2">
+                                    <i class="bi bi-arrow-left me-2"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check me-2"></i> Update Status
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap form validation script -->
+<script>
+(function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})();
+</script>
+{% endblock %}

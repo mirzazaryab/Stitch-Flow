@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Measurements for {{ customer.name }}{% endblock %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    .form-control, .form-control:focus {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px 12px 10px 26px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        box-shadow: none;
+    }
+    .form-control:focus {
+        border-color: #6b7280;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(107, 114, 128, 0.2);
+    }
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        padding: 3px;
+        font-family: 'Poppins', sans-serif;
+        color: #495057;
+        transition: all 0.3s ease;
+    }
+    .form-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2d3748;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+        background: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        color: #2d3748;
+    }
+    .card-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+    .btn-outline-secondary, .btn-success {
+        font-family: 'Poppins', sans-serif;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #e2e8f0;
+        border-color: #2d3748;
+        color: #2d3748;
+    }
+    .btn-success {
+        background-color: #2f855a;
+        border-color: #2f855a;
+    }
+    .btn-success:hover {
+        background-color: #276749;
+        border-color: #276749;
+    }
+    .form-text {
+        font-family: 'Poppins', sans-serif;
+        color: #718096;
+    }
+    h5 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+</style>
+
+<div class="col-12">
+    <div class="main-content py-4">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header rounded-top">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-rulers me-2"></i>Add Measurements for {{ customer.name }}
+                </h3>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Shirt Measurements -->
+                    <div class="row mb-4">
+                        <div class="col-12 mb-3">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="bi bi-shirt me-2"></i>Shirt Measurements
+                            </h5>
+                        </div>
+
+                        {% for field in form.visible_fields %}
+                            {% if field.name == "shirt_length" or field.name == "arm" or field.name == "shoulder" or field.name == "neck" or field.name == "chest" or field.name == "waist" or field.name == "gheera" or field.name == "moda" or field.name == "collar" or field.name == "front_pocket" or field.name == "side_pocket" or field.name == "gool" or field.name == "choras" %}
+                                <div class="col-md-3 mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    <div class="input-group">
+                                        {{ field }}
+                                        <span class="input-group-text">inch</span>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid {{ field.label }} measurement
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Shalwar/Trouser Measurements -->
+                    <div class="row mb-4">
+                        <div class="col-12 mb-3">
+                            <h5 class="text-success border-bottom pb-2">
+                                <i class="bi bi-person-standing me-2"></i>Shalwar/Trouser Measurements
+                            </h5>
+                        </div>
+
+                        {% for field in form.visible_fields %}
+                            {% if field.name == "trouser_length" or field.name == "trouser_waist" or field.name == "trouser_hip" or field.name == "thigh" or field.name == "knee" or field.name == "paincha" %}
+                                <div class="col-md-3 mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    <div class="input-group">
+                                        {{ field }}
+                                        <span class="input-group-text">inch</span>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid {{ field.label }} measurement
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Special Notes -->
+                    <div class="row mb-4">
+                        <div class="col-12 mb-3">
+                            <h5 class="text-info border-bottom pb-2">
+                                <i class="bi bi-chat-text me-2"></i>Special Notes
+                            </h5>
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ form.notes.id_for_label }}" class="form-label">Additional Instructions</label>
+                            {{ form.notes }}
+                            <div class="form-text">Enter any special instructions or requirements</div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'customer_detail' customer.pk %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check me-2"></i>Save Measurements
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap form validation script -->
+<script>
+(function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})();
+</script>
+{% endblock %}

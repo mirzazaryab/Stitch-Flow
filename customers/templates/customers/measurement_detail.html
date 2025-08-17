@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block title %}Measurements for {{ measurement.customer.name }}{% endblock %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    .form-control, .form-control:focus {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        box-shadow: none;
+    }
+    .form-control:focus {
+        border-color: #6b7280;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(107, 114, 128, 0.2);
+    }
+    .measurement-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    .measurement-item {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+    }
+    .measurement-label {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        color: #2d3748;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    .measurement-value {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        color: #495057;
+    }
+    .card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+        background: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        color: #2d3748;
+    }
+    .card-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+    .btn-outline-secondary, .btn-success {
+        font-family: 'Poppins', sans-serif;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #e2e8f0;
+        border-color: #2d3748;
+        color: #2d3748;
+    }
+    .btn-success {
+        background-color: #2f855a;
+        border-color: #2f855a;
+    }
+    .btn-success:hover {
+        background-color: #276749;
+        border-color: #276749;
+    }
+    .form-text, .text-muted {
+        font-family: 'Poppins', sans-serif;
+        color: #718096;
+    }
+    h5 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+    .bg-light {
+        background-color: #f8f9fa !important;
+        font-family: 'Poppins', sans-serif;
+        color: #495057;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="col-12">
+    <div class="main-content py-4">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header rounded-top">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-rulers me-2"></i> Measurements for {{ measurement.customer.name }}
+                    </h3>
+                    <small class="text-muted">
+                        Recorded on {{ measurement.created_at|date:"M d, Y" }}
+                    </small>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <!-- Shirt Measurements -->
+                <div class="row mb-4">
+                    <div class="col-12 mb-3">
+                        <h5 class="text-primary border-bottom pb-2">
+                            <i class="bi bi-shirt me-2"></i> Shirt Measurements
+                        </h5>
+                    </div>
+
+                    <div class="measurement-grid">
+                        {% if measurement.shirt_length %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Shirt Length</div>
+                                <div class="measurement-value">{{ measurement.shirt_length }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.arm %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Arm</div>
+                                <div class="measurement-value">{{ measurement.arm }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.shoulder %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Shoulder</div>
+                                <div class="measurement-value">{{ measurement.shoulder }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.neck %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Neck</div>
+                                <div class="measurement-value">{{ measurement.neck }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.chest %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Chest</div>
+                                <div class="measurement-value">{{ measurement.chest }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.waist %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Waist</div>
+                                <div class="measurement-value">{{ measurement.waist }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.gheera %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Gheera</div>
+                                <div class="measurement-value">{{ measurement.gheera }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.moda %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Moda</div>
+                                <div class="measurement-value">{{ measurement.moda }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.collar %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Collar</div>
+                                <div class="measurement-value">{{ measurement.collar }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.front_pocket %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Front Pocket</div>
+                                <div class="measurement-value">{{ measurement.front_pocket }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.side_pocket %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Side Pocket</div>
+                                <div class="measurement-value">{{ measurement.side_pocket }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.gool %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Gool</div>
+                                <div class="measurement-value">{{ measurement.gool }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.choras %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Choras</div>
+                                <div class="measurement-value">{{ measurement.choras }} inch</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Shalwar/Trouser Measurements -->
+                <div class="row mb-4">
+                    <div class="col-12 mb-3">
+                        <h5 class="text-success border-bottom pb-2">
+                            <i class="bi bi-person-standing me-2"></i> Shalwar/Trouser Measurements
+                        </h5>
+                    </div>
+
+                    <div class="measurement-grid">
+                        {% if measurement.trouser_length %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Trouser Length</div>
+                                <div class="measurement-value">{{ measurement.trouser_length }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.trouser_waist %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Trouser Waist</div>
+                                <div class="measurement-value">{{ measurement.trouser_waist }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.trouser_hip %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Trouser Hip</div>
+                                <div class="measurement-value">{{ measurement.trouser_hip }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.thigh %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Thigh</div>
+                                <div class="measurement-value">{{ measurement.thigh }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.knee %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Knee</div>
+                                <div class="measurement-value">{{ measurement.knee }} inch</div>
+                            </div>
+                        {% endif %}
+
+                        {% if measurement.paincha %}
+                            <div class="measurement-item">
+                                <div class="measurement-label">Paincha</div>
+                                <div class="measurement-value">{{ measurement.paincha }} inch</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Special Notes -->
+                {% if measurement.notes %}
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h5 class="text-info border-bottom pb-2">
+                                <i class="bi bi-chat-text me-2"></i> Special Notes
+                            </h5>
+                            <div class="bg-light p-3 rounded">
+                                {{ measurement.notes|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'customer_detail' measurement.customer.pk %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i> Back to Customer
+                    </a>
+                    <a href="{% url 'measurement_create' measurement.customer.pk %}" class="btn btn-success">
+                        <i class="bi bi-plus me-2"></i> Add New Measurements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

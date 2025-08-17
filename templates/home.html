@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Stitch Flow{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="jumbotron bg-primary text-white p-5 rounded">
+                    <h1 class="display-4">
+                        <i class="bi bi-scissors"></i> Welcome to Stitch Flow
+                    </h1>
+                    <p class="lead">
+                        Manage your customers, orders, measurements, payments, and workflow all in one place.
+                    </p>
+                    <hr class="my-4">
+                    <p>Get started by adding customers and taking their measurements, then create orders and track progress.</p>
+                    <a class="btn btn-light btn-lg" href="{% url 'customer_create' %}" role="button">
+                        <i class="bi bi-person-plus"></i> Add New Customer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="mb-4">Quick Actions</h2>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-person-plus display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Add Customer</h5>
+                        <p class="card-text">Register a new customer with contact details.</p>
+                        <a href="{% url 'customer_create' %}" class="btn btn-primary">
+                            <i class="bi bi-plus"></i> Add Customer
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-bag-plus display-4 text-success mb-3"></i>
+                        <h5 class="card-title">Create Order</h5>
+                        <p class="card-text">Create a new order with multiple items.</p>
+                        <a href="{% url 'order_create' %}" class="btn btn-success">
+                            <i class="bi bi-plus"></i> Create Order
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-box display-4 text-warning mb-3"></i>
+                        <h5 class="card-title">Manage Products</h5>
+                        <p class="card-text">Add and manage products with rates.</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-warning">
+                            <i class="bi bi-gear"></i> Manage Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-diagram-3 display-4 text-info mb-3"></i>
+                        <h5 class="card-title">Workflow Dashboard</h5>
+                        <p class="card-text">Track order progress and employee assignments.</p>
+                        <a href="{% url 'workflow_dashboard' %}" class="btn btn-info">
+                            <i class="bi bi-eye"></i> View Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Overview -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">System Features</h2>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-people text-primary"></i> Customer Management
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check text-success"></i> Customer registration with contact details</li>
+                            <li><i class="bi bi-check text-success"></i> Comprehensive measurement recording</li>
+                            <li><i class="bi bi-check text-success"></i> Customer search and filtering</li>
+                            <li><i class="bi bi-check text-success"></i> Order history tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-bag text-success"></i> Order Management
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check text-success"></i> Multi-item order creation</li>
+                            <li><i class="bi bi-check text-success"></i> Automatic cost calculation (size × rate/inch)</li>
+                            <li><i class="bi bi-check text-success"></i> Order status tracking</li>
+                            <li><i class="bi bi-check text-success"></i> Advanced payment management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-credit-card text-warning"></i> Payment Tracking
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check text-success"></i> Advance payment recording</li>
+                            <li><i class="bi bi-check text-success"></i> Multiple payment methods</li>
+                            <li><i class="bi bi-check text-success"></i> Payment history and status</li>
+                            <li><i class="bi bi-check text-success"></i> Remaining balance calculation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-diagram-3 text-info"></i> Workflow Management
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check text-success"></i> Production phase tracking</li>
+                            <li><i class="bi bi-check text-success"></i> Employee assignment and progress</li>
+                            <li><i class="bi bi-check text-success"></i> Real-time status updates</li>
+                            <li><i class="bi bi-check text-success"></i> Comprehensive dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
