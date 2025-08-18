@@ -57,7 +57,7 @@ def order_create(request):
         form = OrderForm()
         formset = OrderItemFormSet(instance=Order())
 
-    return render(request, 'orders/order_create.html', {
+    return render(request, 'orders/create.html', {
         'form': form,
         'formset': formset
     })
@@ -114,3 +114,11 @@ def product_create(request):
         form = ProductForm()
 
     return render(request, 'orders/product_create.html', {'form': form})
+
+def order_delete(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    if request.method == "POST":
+        order.delete()
+        messages.success(request, f"Order #{order.order_number} deleted successfully.")
+        return redirect('order_list')
+    return redirect('order_list')

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'orders',
     'payments',
     'workflow',
+    'accounting',
 ]
 
 MIDDLEWARE = [

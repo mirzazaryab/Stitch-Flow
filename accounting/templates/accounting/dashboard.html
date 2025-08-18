@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Accounting Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center fw-bold">Daily Accounting Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 bg-success text-white text-center p-4">
+                <h5>Total Sales</h5>
+                <h3 class="fw-bold">Rs {{ total_sales }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 bg-danger text-white text-center p-4">
+                <h5>Total Expenses</h5>
+                <h3 class="fw-bold">Rs {{ total_expenses }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 bg-primary text-white text-center p-4">
+                <h5>Net Profit</h5>
+                <h3 class="fw-bold">Rs {{ profit }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex gap-2 mb-4">
+        <a href="{% url 'sale_create' %}" class="btn btn-success btn-lg rounded-pill">
+            <i class="bi bi-plus-circle"></i> Add Sale
+        </a>
+        <a href="{% url 'expense_create' %}" class="btn btn-danger btn-lg rounded-pill">
+            <i class="bi bi-dash-circle"></i> Add Expense
+        </a>
+        <a href="{% url 'sale_category_create' %}" class="btn btn-outline-success rounded-pill">
+            <i class="bi bi-tags"></i> Add Sale Category
+        </a>
+        <a href="{% url 'expense_category_create' %}" class="btn btn-outline-danger rounded-pill">
+            <i class="bi bi-tags"></i> Add Expense Category
+        </a>
+    </div>
+
+    <!-- Sales Table -->
+    <h4 class="mt-4 mb-3">Today’s Sales</h4>
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-success">
+                    <tr>
+                        <th>#</th>
+                        <th>Category</th>
+                        <th>Amount (Rs)</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales_today %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ sale.category.name }}</td>
+                            <td>{{ sale.amount }}</td>
+                            <td>{{ sale.description|default:"-" }}</td>
+                            <td>{{ sale.date|date:"d M Y" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'sale_update' sale.id %}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'sale_delete' sale.id %}" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No sales recorded today</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Expenses Table -->
+    <h4 class="mt-5 mb-3">Today’s Expenses</h4>
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-danger">
+                    <tr>
+                        <th>#</th>
+                        <th>Category</th>
+                        <th>Amount (Rs)</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses_today %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ expense.category.name }}</td>
+                            <td>{{ expense.amount }}</td>
+                            <td>{{ expense.description|default:"-" }}</td>
+                            <td>{{ expense.date|date:"d M Y" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'expense_update' expense.id %}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'expense_delete' expense.id %}" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No expenses recorded today</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

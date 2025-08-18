@@ -3,19 +3,20 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Customer, Measurement
 from .forms import CustomerForm, MeasurementForm
+from django.views.decorators.http import require_POST
 
 
 def customer_list(request):
     search_query = request.GET.get('search', '')
     customers = Customer.objects.all()
-    
+
     if search_query:
         customers = customers.filter(
             Q(name__icontains=search_query) |
             Q(phone_number__icontains=search_query) |
             Q(company__icontains=search_query)
         )
-    
+
     context = {
         'customers': customers,
         'search_query': search_query,
@@ -32,7 +33,7 @@ def customer_create(request):
             return redirect('customer_detail', pk=customer.pk)
     else:
         form = CustomerForm()
-    
+
     return render(request, 'customers/create.html', {'form': form})
 
 
@@ -40,7 +41,7 @@ def customer_detail(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     measurements = customer.measurements.all()
     orders = customer.orders.all()
-    
+
     context = {
         'customer': customer,
         'measurements': measurements,
@@ -51,7 +52,7 @@ def customer_detail(request, pk):
 
 def customer_edit(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
-    
+
     if request.method == 'POST':
         form = CustomerForm(request.POST, instance=customer)
         if form.is_valid():
@@ -60,13 +61,23 @@ def customer_edit(request, pk):
             return redirect('customer_detail', pk=customer.pk)
     else:
         form = CustomerForm(instance=customer)
-    
+
     return render(request, 'customers/edit.html', {'form': form, 'customer': customer})
+
+
+def customer_delete(request, pk):
+    customer = get_object_or_404(Customer, pk=pk)
+    if request.method == 'POST':
+        customer_name = customer.name
+        customer.delete()
+        messages.success(request, f'Customer "{customer_name}" deleted successfully!')
+        return redirect('customer_list')
+    return render(request, 'customers/customer_delete.html', {'customer': customer})
 
 
 def measurement_create(request, customer_pk):
     customer = get_object_or_404(Customer, pk=customer_pk)
-    
+
     if request.method == 'POST':
         form = MeasurementForm(request.POST)
         if form.is_valid():
@@ -77,7 +88,7 @@ def measurement_create(request, customer_pk):
             return redirect('measurement_detail', pk=measurement.pk)
     else:
         form = MeasurementForm()
-    
+
     return render(request, 'customers/measurement_create.html', {
         'form': form,
         'customer': customer
@@ -87,4 +98,3 @@ def measurement_create(request, customer_pk):
 def measurement_detail(request, pk):
     measurement = get_object_or_404(Measurement, pk=pk)
     return render(request, 'customers/measurement_detail.html', {'measurement': measurement})
-

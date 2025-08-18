@@ -36,7 +36,7 @@ class OrderItemForm(forms.ModelForm):
         fields = ['product', 'size', 'quantity']  # Removed DELETE field
         widgets = {
             'product': forms.Select(attrs={'class': 'form-control'}),
-            'size': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Size in cm'}),
+            'size': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Size in inch'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'placeholder': 'Quantity'}),
         }
 

@@ -26,6 +26,7 @@ class Order(models.Model):
         ('pressing', 'Pressing'),
         ('packing', 'Packing'),
         ('ready', 'Ready for Pickup'),
+        ('delivered', 'Delivered'),
     ]
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
