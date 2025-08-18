@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.env/
+ENV/
+.venv/
+
+# Django Stuff
+db.sqlite3
+db.sqlite3-journal
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+# Static & Media
+/media/
+/staticfiles/
+/static_root/
+
+# Environment Variables
+*.env
+.env.*
+
+# VSCode / IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System Files
+*.DS_Store
+Thumbs.db
+
+# Test & Coverage
+.coverage
+.pytest_cache/
+.tox/
+nosetests.xml
+coverage.xml
+htmlcov/
+
+# Migrations (keep __init__.py only)
+*/migrations/*.py
+!*/migrations/__init__.py
